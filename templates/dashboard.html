@@ -7,7 +7,7 @@
 
   <section class="add-paycheck">
     <h3>Add Paycheck</h3>
-    <form method="post">
+    <form method="POST">
       {{ pc_form.hidden_tag() }}
       {{ pc_form.date(class="input") }}
       {{ pc_form.amount(class="input") }}
@@ -17,7 +17,7 @@
 
   <section class="add-bill">
     <h3>Add Bill</h3>
-    <form method="post">
+    <form method="POST">
       {{ bill_form.hidden_tag() }}
       {{ bill_form.name(class="input") }}
       {{ bill_form.amount(class="input") }}
