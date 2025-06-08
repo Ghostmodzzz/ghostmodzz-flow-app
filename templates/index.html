@@ -1,0 +1,16 @@
+r-1.0 packaging-25.0 python-http-client-3.3.7 requests-2.32.3 six-1.17.0 typing-extensions-4.14.0 urllib3-2.4.0 werkzeug-3.1.3 wtforms-3.2.1
+[notice] A new release of pip is available: 24.0 -> 25.1.1
+[notice] To update, run: pip install --upgrade pip
+==> Uploading build...
+==> Uploaded in 3.7s. Compression took 1.4s
+==> Build successful 🎉
+==> Deploying...
+==> Running 'gunicorn app:app'
+[2025-06-08 06:07:27 +0000] [83] [INFO] Starting gunicorn 23.0.0
+[2025-06-08 06:07:27 +0000] [83] [INFO] Listening at: http://0.0.0.0:10000 (83)
+[2025-06-08 06:07:27 +0000] [83] [INFO] Using worker: sync
+[2025-06-08 06:07:27 +0000] [84] [INFO] Booting worker with pid: 84
+127.0.0.1 - - [08/Jun/2025:06:07:28 +0000] "HEAD / HTTP/1.1" 200 0 "-" "Go-http-client/1.1"
+==> Your service is live 🎉
+127.0.0.1 - - [08/Jun/2025:06:07:35 +0000] "GET / HTTP/1.1" 200 0 "-" "Go-http-client/2.0"
+127.0.0.1 - - [08/Jun/2025:06:07:41 +0000] "GET / HTTP/1.1" 200 0 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
