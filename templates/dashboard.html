@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - GhostModzz Flow</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="navbar">
+        <a href="{{ url_for('main.dashboard') }}">🏠 Dashboard</a>
+        <a href="{{ url_for('main.settings') }}">⚙️ Settings</a>
+        <a href="{{ url_for('main.logout') }}">🚪 Logout</a>
+    </div>
+
+    <div class="container">
+        <h1>🏦 Dashboard</h1>
+
+        <h2>Add Paycheck</h2>
+        <form method="POST" action="{{ url_for('main.dashboard') }}">
+            {{ pform.hidden_tag() }}
+            <label>Date:</label>
+            {{ pform.date }}
+            <label>Amount:</label>
+            {{ pform.amount }}
+            <button type="submit">💰 Add Paycheck</button>
+        </form>
+
+        <h2>Add Bill</h2>
+        <form method="POST" action="{{ url_for('main.dashboard') }}">
+            {{ bform.hidden_tag() }}
+            <label>Bill Name:</label>
+            {{ bform.name }}
+            <label>Due Date:</label>
+            {{ bform.date }}
+            <label>Amount:</label>
+            {{ bform.amount }}
+            <button type="submit">📄 Add Bill</button>
+        </form>
+
+        <h2>📄 Bills</h2>
+        <ul>
+            {% for bill in bills %}
+                <li>{{ bill.name }} - Due: {{ bill.date }} - ${{ bill.amount }}</li>
+            {% endfor %}
+        </ul>
+
+        <h2>💰 Paychecks</h2>
+        <ul>
+            {% for paycheck in paychecks %}
+                <li>Date: {{ paycheck.date }} - ${{ paycheck.amount }}</li>
+            {% endfor %}
+        </ul>
+
+        {% if recommendation %}
+        <div class="flash-message">
+            🧠 AI Recommendation: {{ recommendation }}
+        </div>
+        {% endif %}
+    </div>
+
+    <footer>
+        &copy; 2025 GhostModzz Flow 💀🚀
+    </footer>
+
+    <div class="ai-notification">
+        💡 Did you know? "Saving just 20% of your income can make you a millionaire in 20 years!" <span style="float: right; cursor: pointer;" onclick="this.parentElement.style.display='none'">❌</span>
+    </div>
+</body>
+</html>
