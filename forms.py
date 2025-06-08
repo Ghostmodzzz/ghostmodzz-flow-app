@@ -1,16 +1,25 @@
-
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
-from wtforms.validators import DataRequired, Length, Email, EqualTo
+from wtforms import StringField, PasswordField, SubmitField, DecimalField, DateField
+from wtforms.validators import DataRequired, Email, Length, EqualTo
 
 class RegistrationForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired(), Length(min=2, max=20)])
-    email = StringField('Email', validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
-    submit = SubmitField('Sign Up')
+    email    = StringField('Email', validators=[DataRequired(), Email()])
+    password = PasswordField('Password', validators=[DataRequired(), Length(min=6)])
+    confirm  = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
+    submit   = SubmitField('Create Account')
 
 class LoginForm(FlaskForm):
-    email = StringField('Email', validators=[DataRequired(), Email()])
+    email    = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
-    submit = SubmitField('Login')
+    submit   = SubmitField('Log In')
+
+class BillForm(FlaskForm):
+    name     = StringField('Bill Name', validators=[DataRequired()])
+    amount   = DecimalField('Amount', validators=[DataRequired()])
+    due_date = DateField('Due Date', validators=[DataRequired()])
+    submit   = SubmitField('Add Bill')
+
+class PaycheckForm(FlaskForm):
+    date     = DateField('Paycheck Date', validators=[DataRequired()])
+    amount   = DecimalField('Amount', validators=[DataRequired()])
+    submit   = SubmitField('Add Paycheck')
