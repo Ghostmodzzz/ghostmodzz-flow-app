@@ -1,4 +1,3 @@
-
 Flask==2.2.2
 Flask-Login
 Flask-Mail
