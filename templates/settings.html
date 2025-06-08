@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Settings - GhostModzz Flow</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="navbar">
+        <a href="{{ url_for('main.dashboard') }}">🏠 Dashboard</a>
+        <a href="{{ url_for('main.settings') }}">⚙️ Settings</a>
+        <a href="{{ url_for('main.logout') }}">🚪 Logout</a>
+    </div>
+
+    <div class="container">
+        <h1>⚙️ Settings</h1>
+
+        <form method="POST" action="{{ url_for('main.settings') }}">
+            <label for="notifications">🔔 Email Notifications:</label>
+            <select id="notifications" name="notifications">
+                <option value="on">On</option>
+                <option value="off">Off</option>
+            </select>
+
+            <label for="budget-goal">🎯 Monthly Budget Goal ($):</label>
+            <input type="number" id="budget-goal" name="budget_goal" placeholder="Enter goal amount">
+
+            <label for="theme">🎨 Theme:</label>
+            <select id="theme" name="theme">
+                <option value="dark">Dark Mode (GhostModzz)</option>
+                <option value="light">Light Mode</option>
+            </select>
+
+            <label for="ai-suggestions">🤖 AI Budget Suggestions:</label>
+            <select id="ai-suggestions" name="ai_suggestions">
+                <option value="on">Enable</option>
+                <option value="off">Disable</option>
+            </select>
+
+            <button type="submit">💾 Save Settings</button>
+        </form>
+    </div>
+
+    <footer>
+        &copy; 2025 GhostModzz Flow AI 💀🚀
+    </footer>
+</body>
+</html>
