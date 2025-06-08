@@ -2,68 +2,155 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard - GhostModzz Flow</title>
+    <title>Dashboard | GhostModzz Finance</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background-color: #0f0f1b;
+            color: #f0f0f0;
+            font-family: 'Poppins', sans-serif;
+        }
+        .container {
+            width: 90%;
+            margin: auto;
+            padding-top: 30px;
+        }
+        .form-section, .chat-section {
+            background-color: #1f1f2e;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        h2 {
+            text-align: center;
+            color: #00ffff;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            background-color: #29293d;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+        }
+        button {
+            background-color: #00ffff;
+            color: #000;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        #chat-log {
+            height: 300px;
+            overflow-y: scroll;
+            border: 1px solid #333;
+            padding: 10px;
+            background-color: #111;
+            margin-bottom: 10px;
+        }
+        #budgetChart {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 10px;
+        }
+        .quote {
+            text-align: center;
+            font-style: italic;
+            color: #aaa;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <div class="navbar">
-        <a href="{{ url_for('main.dashboard') }}">🏠 Dashboard</a>
-        <a href="{{ url_for('main.settings') }}">⚙️ Settings</a>
-        <a href="{{ url_for('main.logout') }}">🚪 Logout</a>
-    </div>
 
-    <div class="container">
-        <h1>🏦 Dashboard</h1>
+<div class="container">
+    <h2>Welcome, {{ current_user.email }}!</h2>
 
-        <h2>Add Paycheck</h2>
-        <form method="POST" action="{{ url_for('main.dashboard') }}">
+    <div class="form-section">
+        <h3>Add Paycheck</h3>
+        <form method="POST">
             {{ pform.hidden_tag() }}
-            <label>Date:</label>
-            {{ pform.date }}
-            <label>Amount:</label>
-            {{ pform.amount }}
-            <button type="submit">💰 Add Paycheck</button>
+            {{ pform.date.label }}<br>
+            {{ pform.date(size=32) }}<br>
+            {{ pform.amount.label }}<br>
+            {{ pform.amount(size=32) }}<br>
+            {{ pform.submit }}
         </form>
+    </div>
 
-        <h2>Add Bill</h2>
-        <form method="POST" action="{{ url_for('main.dashboard') }}">
+    <div class="form-section">
+        <h3>Add Bill</h3>
+        <form method="POST">
             {{ bform.hidden_tag() }}
-            <label>Bill Name:</label>
-            {{ bform.name }}
-            <label>Due Date:</label>
-            {{ bform.date }}
-            <label>Amount:</label>
-            {{ bform.amount }}
-            <button type="submit">📄 Add Bill</button>
+            {{ bform.name.label }}<br>
+            {{ bform.name(size=32) }}<br>
+            {{ bform.date.label }}<br>
+            {{ bform.date(size=32) }}<br>
+            {{ bform.amount.label }}<br>
+            {{ bform.amount(size=32) }}<br>
+            {{ bform.submit }}
         </form>
-
-        <h2>📄 Bills</h2>
-        <ul>
-            {% for bill in bills %}
-                <li>{{ bill.name }} - Due: {{ bill.date }} - ${{ bill.amount }}</li>
-            {% endfor %}
-        </ul>
-
-        <h2>💰 Paychecks</h2>
-        <ul>
-            {% for paycheck in paychecks %}
-                <li>Date: {{ paycheck.date }} - ${{ paycheck.amount }}</li>
-            {% endfor %}
-        </ul>
-
-        {% if recommendation %}
-        <div class="flash-message">
-            🧠 AI Recommendation: {{ recommendation }}
-        </div>
-        {% endif %}
     </div>
 
-    <footer>
-        &copy; 2025 GhostModzz Flow 💀🚀
-    </footer>
-
-    <div class="ai-notification">
-        💡 Did you know? "Saving just 20% of your income can make you a millionaire in 20 years!" <span style="float: right; cursor: pointer;" onclick="this.parentElement.style.display='none'">❌</span>
+    <div class="form-section">
+        <h3>Budget Breakdown</h3>
+        <canvas id="budgetChart"></canvas>
     </div>
+
+    <div class="chat-section">
+        <h3>Ask GhostModzz AI (Finance Only)</h3>
+        <div id="chat-log"></div>
+        <input type="text" id="chat-input" placeholder="Type your financial question...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <div class="quote">
+        "{{ random_quote }}"
+    </div>
+</div>
+
+<script>
+    const ctx = document.getElementById('budgetChart').getContext('2d');
+    const chartData = {
+        labels: ['Bills', 'Savings', 'Leftover'],
+        datasets: [{
+            data: [
+                {{ bills|length }}, 
+                {{ paychecks|length }}, 
+                Math.max(1, (paychecks|length) - (bills|length))
+            ],
+            backgroundColor: ['#00ffff', '#ff00ff', '#ffaa00']
+        }]
+    };
+    const budgetChart = new Chart(ctx, {
+        type: 'pie',
+        data: chartData
+    });
+
+    const chatLog = document.getElementById('chat-log');
+    const chatInput = document.getElementById('chat-input');
+
+    function sendMessage() {
+        const message = chatInput.value;
+        if (!message.trim()) return;
+
+        chatLog.innerHTML += `<div><strong>You:</strong> ${message}</div>`;
+
+        // Simple static AI response for now:
+        if (message.toLowerCase().includes('save') || message.toLowerCase().includes('budget')) {
+            chatLog.innerHTML += `<div><strong>GhostModzz AI:</strong> Focus on saving 20% of your income and avoid unnecessary expenses!</div>`;
+        } else if (message.toLowerCase().includes('debt')) {
+            chatLog.innerHTML += `<div><strong>GhostModzz AI:</strong> Prioritize paying off high-interest debts first!</div>`;
+        } else {
+            chatLog.innerHTML += `<div><strong>GhostModzz AI:</strong> I'm trained only for financial advice. Please ask about saving, budgeting, or debt!</div>`;
+        }
+
+        chatInput.value = '';
+        chatLog.scrollTop = chatLog.scrollHeight;
+    }
+</script>
+
 </body>
 </html>
+
