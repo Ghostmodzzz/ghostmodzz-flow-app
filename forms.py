@@ -20,6 +20,6 @@ class BillForm(FlaskForm):
     submit   = SubmitField('Add Bill')
 
 class PaycheckForm(FlaskForm):
-    date     = DateField('Paycheck Date', validators=[DataRequired()])
-    amount   = DecimalField('Amount', validators=[DataRequired()])
-    submit   = SubmitField('Add Paycheck')
+    date   = DateField('Paycheck Date', validators=[DataRequired()])
+    amount = DecimalField('Amount', validators=[DataRequired()])
+    submit = SubmitField('Add Paycheck')
