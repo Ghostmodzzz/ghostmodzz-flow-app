@@ -1,20 +1,11 @@
 import os
 
 class Config:
-    SECRET_KEY = os.environ.get('SECRET_KEY')
-    SECURITY_PASSWORD_SALT = os.environ.get('SECURITY_PASSWORD_SALT')
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', 'sqlite:///db.sqlite3')
+    SECRET_KEY = os.getenv("SECRET_KEY")
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///app.db'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-
-    # SendGrid Email Setup
-    SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY')
-    EMAIL_SENDER = os.environ.get('EMAIL_SENDER')
-
-    # OpenRouter AI API Key
-    OPENROUTER_API_KEY = os.environ.get('OPENROUTER_API_KEY')
-class Config:
-    SECRET_KEY = os.environ.get("SECRET_KEY", "default_secret_key")
-    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL", "sqlite:///db.sqlite3")
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SECURITY_PASSWORD_SALT = os.environ.get("SECURITY_PASSWORD_SALT", "default_salt")
-    BASE_URL = os.environ.get("BASE_URL", "https://your-app-name.onrender.com")
+    SECURITY_PASSWORD_SALT = os.getenv("SECURITY_PASSWORD_SALT")
+    SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
+    OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
+    BASE_URL = os.getenv("BASE_URL")  # You have this one already
+    EMAIL_SENDER = os.getenv("EMAIL_SENDER")  # <--- 🛑 ADD THIS LINE
