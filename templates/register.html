@@ -1,24 +1,12 @@
-
-<!doctype html>
-<html lang="en">
-<head><title>Register</title></head>
-<body>
-    <h1>Register</h1>
-    <form method="POST">
-        {{ form.hidden_tag() }}
-        {{ form.username.label }} {{ form.username(size=32) }}<br>
-        {{ form.email.label }} {{ form.email(size=32) }}<br>
-        {{ form.password.label }} {{ form.password(size=32) }}<br>
-        {{ form.confirm_password.label }} {{ form.confirm_password(size=32) }}<br>
-        {{ form.submit() }}
-    </form>
-    <a href="{{ url_for('login') }}">Already have an account?</a>
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        {% for category, message in messages %}
-          <div class="alert alert-{{ category }}">{{ message }}</div>
-        {% endfor %}
-      {% endif %}
-    {% endwith %}
-</body>
-</html>
+{% extends "base.html" %}
+{% block content %}
+  <h2>Sign Up</h2>
+  <form method="post">
+    {{ form.hidden_tag() }}
+    {{ form.email(class="input", placeholder="Email") }}
+    {{ form.password(class="input", placeholder="Password") }}
+    {{ form.confirm(class="input", placeholder="Confirm Password") }}
+    {{ form.submit(class="btn") }}
+  </form>
+  <p>Already have an account? <a href="{{ url_for('main.login') }}">Log in</a></p>
+{% endblock %}
