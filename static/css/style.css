@@ -1,31 +1,61 @@
 body {
-  margin:0;
+  margin: 0;
   font-family: sans-serif;
   background: #09090a;
   color: #eee;
 }
 header {
-  display:flex; align-items:center; justify-content:space-between;
-  padding:1rem; background:#111;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  background: #111;
 }
-h1 { color:#8c39e7; }
+h1 {
+  color: #8c39e7;
+}
 .btn, .btn-logout {
-  background:#8c39e7; color:#fff; border:none;
-  padding:0.5rem 1rem; border-radius:8px; cursor:pointer;
+  background: #8c39e7;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
 }
 .input {
-  width:100%; padding:0.5rem; margin:0.25rem 0;
-  background:#111; border:1px solid #333; border-radius:8px;
-  color:#eee;
+  width: 100%;
+  padding: 0.5rem;
+  margin: 0.25rem 0;
+  background: #111;
+  border: 1px solid #333;
+  border-radius: 8px;
+  color: #eee;
 }
-section { padding:1rem; }
-section h3 { margin-top:0; color:#ccc; }
+section {
+  padding: 1rem;
+}
+section h3 {
+  margin-top: 0;
+  color: #ccc;
+}
 .dashboard-grid {
-  display:grid; grid-template-columns:1fr 1fr; gap:1rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
 }
 .card {
-  background:#111; padding:0.75rem; border-radius:8px;
-  box-shadow:0 2px 4px rgba(0,0,0,0.5);
+  background: #111;
+  padding: 0.75rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
-.flash.success { background: #293b09; color: #a6e22e; padding:0.5rem; }
-.flash.danger  { background: #3b0909; color: #f92672; padding:0.5rem; }
+.flash.success {
+  background: #293b09;
+  color: #a6e22e;
+  padding: 0.5rem;
+}
+.flash.danger {
+  background: #3b0909;
+  color: #f92672;
+  padding: 0.5rem;
+}
