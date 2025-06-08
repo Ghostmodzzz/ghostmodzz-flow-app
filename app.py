@@ -15,6 +15,11 @@ def create_app():
 
     # Register blueprints
     app.register_blueprint(main_blueprint)
+
+    # Auto-create any missing tables
+    with app.app_context():
+        db.create_all()
+
     return app
 
 # Expose a module-level 'app' for Gunicorn
