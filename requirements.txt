@@ -13,4 +13,4 @@ sendgrid==6.12.3
 
 # AI and HTTP client
 requests==2.31.0
-openrouter==0.0.1
+openrouter==1.0
