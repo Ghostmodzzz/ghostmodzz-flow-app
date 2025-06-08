@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import login_user, login_required, logout_user, current_user
-from extensions import db
+from extensions import db, login_manager  # <-- Add login_manager here
 from forms import RegisterForm, LoginForm, PaycheckForm, BillForm
 from models import User, Paycheck, Bill
 from services.mail import send_confirmation_email
@@ -11,6 +11,11 @@ import random
 
 main = Blueprint("main", __name__)
 serializer = URLSafeTimedSerializer(Config.SECRET_KEY)
+
+# 🔥 THIS FIXES YOUR ERROR
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 @main.route("/", methods=["GET"])
 def index():
