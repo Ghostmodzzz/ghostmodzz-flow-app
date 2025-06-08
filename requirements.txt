@@ -1,11 +1,8 @@
-
-Flask==2.2.2
-Flask-Login
-Flask-Mail
-Flask-WTF
-Flask-SQLAlchemy
-email-validator
-Werkzeug==2.2.3
-gunicorn
+Flask
+Flask_SQLAlchemy
+Flask_Login
+Flask_WTF
 flask-bcrypt
 psycopg2-binary
+Flask-Migrate
+gunicorn
