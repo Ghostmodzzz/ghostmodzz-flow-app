@@ -1,12 +1,23 @@
 {% extends "base.html" %}
 {% block content %}
   <h2>Sign Up</h2>
-  <form method="post">
+  <form method="POST">
     {{ form.hidden_tag() }}
-    {{ form.email(class="input", placeholder="Email") }}<br>
-    {{ form.password(class="input", placeholder="Password") }}<br>
-    {{ form.confirm(class="input", placeholder="Confirm Password") }}<br>
-    {{ form.submit(class="btn") }}
+    <div>
+      {{ form.email.label }}<br>
+      {{ form.email(size=32, class="input") }}
+    </div>
+    <div>
+      {{ form.password.label }}<br>
+      {{ form.password(size=32, class="input") }}
+    </div>
+    <div>
+      {{ form.confirm.label }}<br>
+      {{ form.confirm(size=32, class="input") }}
+    </div>
+    <div>
+      {{ form.submit(class="btn") }}
+    </div>
   </form>
   <p>Already have an account? <a href="{{ url_for('main.login') }}">Log in</a></p>
 {% endblock %}
