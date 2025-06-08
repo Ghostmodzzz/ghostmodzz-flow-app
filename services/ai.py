@@ -1,24 +1,30 @@
-import openrouter
+import requests
+import json
 from config import Config
 
 def get_budget_recommendation(paychecks, bills):
-    total_income = sum([p.amount for p in paychecks])
-    total_bills = sum([b.amount for b in bills])
-    savings_goal = total_income * 0.20
+    total_income = sum(p.amount for p in paychecks)
+    total_bills = sum(b.amount for b in bills)
+    prompt = f"My monthly income is {total_income} and my total bills are {total_bills}. What is your recommendation for budgeting?"
 
-    client = openrouter.Client(api_key=Config.OPENROUTER_API_KEY)
+    headers = {
+        "Authorization": f"Bearer {Config.OPENROUTER_API_KEY}",
+        "HTTP-Referer": "https://ghostmodzz.com/",  # use your domain
+        "Content-Type": "application/json"
+    }
 
-    prompt = f"""
-    I have an income of ${total_income} and bills totaling ${total_bills}.
-    Recommend a budget plan including savings, expenses, and fun money.
-    """
+    data = {
+        "model": "gpt-3.5-turbo",
+        "messages": [
+            {"role": "system", "content": "You are a helpful budgeting assistant."},
+            {"role": "user", "content": prompt}
+        ]
+    }
 
-    try:
-        response = client.chat.completions.create(
-            model="gpt-4",
-            messages=[{"role": "user", "content": prompt}]
-        )
-        budget_plan = response.choices[0].message.content
-        return budget_plan
-    except Exception as e:
-        return "Unable to generate budget at the moment."
+    response = requests.post("https://openrouter.ai/api/v1/chat/completions", headers=headers, json=data)
+
+    if response.status_code == 200:
+        result = response.json()
+        return result["choices"][0]["message"]["content"]
+    else:
+        return "Sorry, I couldn't generate a recommendation at the moment."
