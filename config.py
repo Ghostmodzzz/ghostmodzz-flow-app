@@ -1,7 +1,18 @@
+import os
+
 class Config:
-    SECRET_KEY = "your-secret-key"
-    SQLALCHEMY_DATABASE_URI = "sqlite:///app.db"
+    # Flask secret for sessions, CSRF protection, etc.
+    SECRET_KEY = os.environ["SECRET_KEY"]
+
+    # SQLAlchemy
+    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL", "sqlite:///site.db")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SENDGRID_API_KEY = "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"
-    OPENROUTER_API_KEY = "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"
-    EMAIL_SENDER = "no-reply@ghostmodzz-flow-app.onrender.com"
+
+    # SendGrid (email verification)
+    SENDGRID_API_KEY = os.environ["SENDGRID_API_KEY"]
+
+    # OpenRouter (AI budgeting)
+    OPENROUTER_API_KEY = os.environ["OPENROUTER_API_KEY"]
+
+    # itsdangerous salt for email confirmation tokens
+    SECURITY_PASSWORD_SALT = os.environ["SECURITY_PASSWORD_SALT"]
