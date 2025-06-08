@@ -1,20 +1,21 @@
 from flask import Flask
-from config import Config
 from extensions import db, login_manager, mail
-from routes import main as main_blueprint
+from config import Config
 
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
 
-    # Initialize Extensions
     db.init_app(app)
     login_manager.init_app(app)
     mail.init_app(app)
 
-    login_manager.login_view = 'main.login'
+    # Auto-create database tables
+    with app.app_context():
+        from models import User, Bill, Paycheck
+        db.create_all()
 
-    # Register Blueprints
+    from routes import main as main_blueprint
     app.register_blueprint(main_blueprint)
 
     return app
