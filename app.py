@@ -8,14 +8,16 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
 
+    # Initialize extensions
     db.init_app(app)
     login_manager.init_app(app)
     Migrate(app, db)
 
+    # Register blueprints
     app.register_blueprint(main_blueprint)
     return app
 
-# ── expose the app for Gunicorn ───────────────────────
+# Expose a module-level 'app' for Gunicorn
 app = create_app()
 
 if __name__ == "__main__":
