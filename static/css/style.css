@@ -1,0 +1,30 @@
+body {
+  background: #0a0a0a;
+  color: #eee;
+  font-family: sans-serif;
+  text-align: center;
+}
+header {
+  background: #111;
+  padding: 1em;
+}
+.logo {
+  width: 80px;
+}
+.btn {
+  background: #6a0dad;
+  color: white;
+  border: none;
+  padding: 0.5em 1em;
+  margin: 0.5em;
+}
+.flash {
+  padding: 0.5em;
+  margin: 0.5em;
+}
+.flash.success { background: green; }
+.flash.danger { background: red; }
+.loading {
+  font-size: 1.2em;
+  padding: 2em;
+}
