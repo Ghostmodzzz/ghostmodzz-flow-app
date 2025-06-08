@@ -1,17 +1,13 @@
 import os
 
 class Config:
-    # Flask & WTF
-    SECRET_KEY               = os.environ.get("SECRET_KEY")
-    SECURITY_PASSWORD_SALT   = os.environ.get("SECURITY_PASSWORD_SALT")
-
-    # Database (if you’re using Render Postgres, you can also pull DATABASE_URL here)
-    SQLALCHEMY_DATABASE_URI  = os.environ.get("DATABASE_URL", "sqlite:///site.db")
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
-
-    # SendGrid
-    SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY")
-    EMAIL_SENDER     = os.environ.get("EMAIL_SENDER")
-
-    # OpenRouter
-    OPENROUTER_API_KEY = os.environ.get("OPENROUTER_API_KEY")
+    # Flask secret
+    SECRET_KEY = os.getenv("SECRET_KEY", "")
+    # itsdangerous salt for email confirmation
+    SECURITY_PASSWORD_SALT = os.getenv("SECURITY_PASSWORD_SALT", "")
+    # SendGrid API key (strip out any stray newline)
+    SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY", "").strip()
+    # The “from” address you registered as a Single Sender in SendGrid
+    EMAIL_SENDER = os.getenv("EMAIL_SENDER", "").strip()
+    # Your OpenRouter key
+    OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY", "")
