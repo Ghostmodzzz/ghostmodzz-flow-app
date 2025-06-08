@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
-  <h2>Create Account</h2>
+  <h2>Sign Up</h2>
   <form method="POST">
     {{ form.hidden_tag() }}
-    <p>{{ form.email.label }}<br>{{ form.email(class="input") }}</p>
-    <p>{{ form.password.label }}<br>{{ form.password(class="input") }}</p>
-    <p>{{ form.confirm_password.label }}<br>{{ form.confirm_password(class="input") }}</p>
-    <p>{{ form.submit(class="btn") }}</p>
+    {{ form.email.label }} {{ form.email() }}<br>
+    {{ form.password.label }} {{ form.password() }}<br>
+    {{ form.confirm.label }} {{ form.confirm() }}<br>
+    {{ form.submit(class="btn") }}
   </form>
   <p>Already have an account? <a href="{{ url_for('main.login') }}">Log in</a></p>
 {% endblock %}

@@ -1,5 +1,22 @@
 {% extends "base.html" %}
 {% block content %}
-  <h2>Welcome, {{ current_user.email }}!</h2>
-  <p>Your AI-generated budget summary will appear here.</p>
+  <h2>Dashboard</h2>
+  <div class="recommendation">{{ recommendation }}</div>
+  <h3>Add Paycheck</h3>
+  <form method="POST">
+    {{ pform.hidden_tag() }}
+    {{ pform.date() }} {{ pform.amount() }} {{ pform.submit(class="btn") }}
+  </form>
+  <h3>Bills Due</h3>
+  <form method="POST">
+    {{ bform.hidden_tag() }}
+    {{ bform.name() }} {{ bform.date() }} {{ bform.amount() }} {{ bform.submit(class="btn") }}
+  </form>
+  <h3>Current Bills</h3>
+  <ul>
+    {% for bill in bills %}
+      <li>{{ bill.name }} on {{ bill.date }}: ${{ bill.amount }}</li>
+    {% endfor %}
+  </ul>
+  <p><a href="{{ url_for('main.logout') }}">Logout</a></p>
 {% endblock %}

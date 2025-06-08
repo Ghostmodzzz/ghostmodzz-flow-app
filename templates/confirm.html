@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-  <h2>Email Confirmation</h2>
-  <p>Please check your email and click the confirmation link.</p>
-  <p><a href="{{ url_for('main.login') }}">Back to login</a></p>
+  <h2>Verify Your Email</h2>
+  <p>We've sent a verification link to your email. Please check and click to confirm.</p>
+  <p><a href="{{ url_for('main.loading') }}">Resend Link</a></p>
 {% endblock %}
