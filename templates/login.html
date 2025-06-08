@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - GhostModzz Flow</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="navbar">
+        <a href="{{ url_for('main.register') }}">📝 Register</a>
+    </div>
+
+    <div class="container">
+        <h1>🔐 Login</h1>
+        <form method="POST" action="{{ url_for('main.login') }}">
+            {{ form.hidden_tag() }}
+            <label>Email:</label>
+            {{ form.email }}
+            <label>Password:</label>
+            {{ form.password }}
+            <button type="submit">🚪 Login</button>
+        </form>
+    </div>
+
+    <footer>
+        &copy; 2025 GhostModzz Flow 💀🚀
+    </footer>
+</body>
+</html>
