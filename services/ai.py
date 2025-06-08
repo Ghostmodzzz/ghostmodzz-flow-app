@@ -1,13 +1,19 @@
-from openrouter import OpenRouter
-from flask import current_app
+import requests
+from config import Config
 
-def generate_budget_advice(paycheck, bills, settings):
-    client = OpenRouter(api_key=current_app.config["OPENROUTER_API_KEY"])
-    prompt = f"""
-I have a paycheck of ${paycheck.amount} on {paycheck.date},
-and upcoming bills: {', '.join(f'{b.name} (${b.amount}) on {b.date}' for b in bills)}.
-Split the remainder: {settings['savings_pct']}% to savings, {settings['spend_pct']}% to spending.
-Provide me a friendly summary.
-"""
-    resp = client.chat.completions.create(model="gpt-4o-mini", messages=[{"role":"user","content":prompt}])
-    return resp.choices[0].message.content
+def get_budget_recommendation(paychecks, bills):
+    # Prepare prompt
+    data = {
+        "model": "gpt-4o-mini",
+        "messages": [
+            {"role": "system", "content": "You are a budgeting assistant."},
+            {"role": "user", "content": f"Paychecks: {[(p.date.isoformat(), p.amount) for p in paychecks]}, Bills: {[(b.name, b.date.isoformat(), b.amount) for b in bills]}"}
+        ]
+    }
+    headers = {
+        "Authorization": f"Bearer {Config.OPENROUTER_API_KEY}"
+    }
+    resp = requests.post("https://openrouter.ai/api/v1/chat/completions", json=data, headers=headers)
+    if resp.status_code == 200:
+        return resp.json()["choices"][0]["message"]["content"]
+    return "Unable to get recommendation at this time."
