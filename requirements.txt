@@ -6,3 +6,4 @@ flask-bcrypt
 psycopg2-binary
 Flask-Migrate
 gunicorn
+email-validator
