@@ -1,16 +1,73 @@
+{% extends "base.html" %}
+{% block content %}
+  <section class="welcome">
+    <h2>Welcome, {{ current_user.email }}</h2>
+    <p>Command your cash the GhostModzz way—dark, fast, fearless.</p>
+  </section>
 
-<!doctype html>
-<html lang="en">
-<head><title>Dashboard</title></head>
-<body>
-    <h1>Welcome to the Dashboard!</h1>
-    <a href="{{ url_for('logout') }}">Logout</a>
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        {% for category, message in messages %}
-          <div class="alert alert-{{ category }}">{{ message }}</div>
-        {% endfor %}
-      {% endif %}
-    {% endwith %}
-</body>
-</html>
+  <section class="link-bank">
+    <button id="link-btn" class="btn">🔗 Link Bank Account</button>
+  </section>
+
+  <section class="add-paycheck">
+    <h3>Add Paycheck</h3>
+    <form method="post">
+      {{ pc_form.hidden_tag() }}
+      {{ pc_form.date(class="input") }}
+      {{ pc_form.amount(class="input") }}
+      {{ pc_form.submit(class="btn") }}
+    </form>
+  </section>
+
+  <section class="add-bill">
+    <h3>Add Bill</h3>
+    <form method="post">
+      {{ bill_form.hidden_tag() }}
+      {{ bill_form.name(class="input") }}
+      {{ bill_form.amount(class="input") }}
+      {{ bill_form.due_date(class="input") }}
+      {{ bill_form.submit(class="btn") }}
+    </form>
+  </section>
+
+  <section class="dashboard-grid">
+    <div>
+      <h3>Next Paychecks</h3>
+      {% for pc in paychecks %}
+        <div class="card">
+          <strong>{{ pc.date }}:</strong> ${{ pc.amount }}
+          <ul>
+            {% for a in pc.allocations %}
+              <li>{{ a.bill }} → ${{ a.allocated }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endfor %}
+    </div>
+    <div>
+      <h3>Upcoming Bills</h3>
+      {% for b in bills %}
+        <div class="card">
+          {{ b.name }} — due {{ b.due_date }}
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <script>
+    const handler = Plaid.create({
+      clientName: 'GhostModzz Flow',
+      env: '{{ current_app.config["PLAID_ENV"] }}',
+      key: '{{ current_app.config["PLAID_CLIENT_ID"] }}', 
+      product: ['transactions'],
+      onSuccess: (public_token) => {
+        fetch('{{ url_for("main.link_bank") }}', {
+          method:'POST',
+          headers:{'Content-Type':'application/x-www-form-urlencoded'},
+          body:'public_token='+public_token
+        }).then(()=> location.reload());
+      }
+    });
+    document.getElementById('link-btn').onclick = () => handler.open();
+  </script>
+{% endblock %}
